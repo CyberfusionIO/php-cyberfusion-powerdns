@@ -29,31 +29,17 @@ phpunit:
   coverage: '/^\s*Lines:\s*(\d+\.\d+)\%/'
   variables:
     XDEBUG_MODE: coverage
-  services:
-    - name: mariadb:10.3
   dependencies:
     - composer
-    - environment
-    - build-database
   script:
     - php -v
     - mysql --host="${DB_HOST}" --user="${MYSQL_USER}" --password="${MYSQL_PASSWORD}" "${MYSQL_DATABASE}" < db.sql
     - php -d memory_limit=4G ./vendor/bin/phpunit --coverage-text --colors=never
-  artifacts:
-    paths:
-      - ./storage/logs # for debugging
-      - db.sql
-    expire_in: 1 days
-    when: on_failure
 
 phpstan:
   stage: analysis
-  services:
-    - name: mariadb:10.3
   dependencies:
     - composer
-    - environment
-    - build-database
   script:
     - ./vendor/bin/phpstan --version
     - php -d memory_limit=4G ./vendor/bin/phpstan analyse -v --no-ansi --no-interaction
@@ -63,11 +49,15 @@ phpstan:
 
 pint:
   stage: analysis
+  dependencies:
+    - composer
   script:
     - ./vendor/bin/pint
 
 rector:
   stage: analysis
+  dependencies:
+    - composer
   script:
     - ./vendor/bin/rector process --dry-run
 
