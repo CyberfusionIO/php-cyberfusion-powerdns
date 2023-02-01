@@ -32,8 +32,6 @@ phpunit:
   dependencies:
     - composer
   script:
-    - php -v
-    - mysql --host="${DB_HOST}" --user="${MYSQL_USER}" --password="${MYSQL_PASSWORD}" "${MYSQL_DATABASE}" < db.sql
     - php -d memory_limit=4G ./vendor/bin/phpunit --coverage-text --colors=never
 
 phpstan:
