@@ -1,0 +1,63 @@
+<?php
+
+namespace Cyberfusion\PowerDNS\Models;
+
+use Cyberfusion\PowerDNS\Contracts\Requestable;
+use Cyberfusion\PowerDNS\Contracts\Responsable;
+use stdClass;
+
+class Metadata implements Responsable, Requestable
+{
+    private string $kind;
+
+    private array $metadata;
+
+    public function __construct(
+        string $kind = '',
+        array $metadata = []
+    ) {
+        $this
+            ->setKind($kind)
+            ->setMetadata($metadata);
+    }
+
+    public function getKind(): string
+    {
+        return $this->kind;
+    }
+
+    public function setKind(string $kind): Metadata
+    {
+        $this->kind = $kind;
+
+        return $this;
+    }
+
+    public function getMetadata(): array
+    {
+        return $this->metadata;
+    }
+
+    public function setMetadata(array $metadata): Metadata
+    {
+        $this->metadata = $metadata;
+
+        return $this;
+    }
+
+    public static function fromResponse(stdClass $data): self
+    {
+        return new self(
+            kind: $data->kind,
+            metadata: $data->metdata
+        );
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'kind' => $this->kind,
+            'metadata' => $this->metadata,
+        ];
+    }
+}

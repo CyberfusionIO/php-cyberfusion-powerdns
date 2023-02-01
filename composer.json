@@ -1,0 +1,58 @@
+{
+  "name": "cyberfusion/laravel-powerdns",
+  "description": "Client for the PowerDNS api",
+  "type": "library",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Dick van der Heiden",
+      "email": "info@vdhicts.nl"
+    }
+  ],
+  "require": {
+    "php": ">=8.1",
+    "illuminate/http": "^9.50",
+    "illuminate/support": "^9.50"
+  },
+  "require-dev": {
+    "laravel/pint": "^1.4",
+    "phpstan/phpstan": "^1.9",
+    "phpunit/phpunit": "^9.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Cyberfusion\\PowerDNS\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Cyberfusion\\PowerDNS\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": [
+      "@test:analyze",
+      "@test:no-coverage"
+    ],
+    "test:analyze": "vendor/bin/phpstan analyze",
+    "test:coverage": "vendor/bin/phpunit",
+    "test:no-coverage": "vendor/bin/phpunit --no-coverage",
+    "pint:check": "vendor/bin/pint --test",
+    "pint:fix": "vendor/bin/pint",
+    "rector:check": "@rector:fix --dry-run",
+    "rector:fix": "@php vendor/bin/rector process",
+    "lint:check": [
+      "@rector:check",
+      "@pint:check"
+    ],
+    "lint:fix": [
+      "@rector:fix",
+      "@pint:fix"
+    ]
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
