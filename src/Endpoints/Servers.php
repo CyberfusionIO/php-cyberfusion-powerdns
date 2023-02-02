@@ -11,9 +11,6 @@ class Servers extends Endpoint
         $response = $this
             ->client
             ->get('servers');
-
-        $this->latestResponse = $response;
-
         if (! $response->successful()) {
             return null;
         }
@@ -29,9 +26,6 @@ class Servers extends Endpoint
         $response = $this
             ->client
             ->get(sprintf('servers/%s', $serverId));
-
-        $this->latestResponse = $response;
-
         if (! $response->successful()) {
             return null;
         }

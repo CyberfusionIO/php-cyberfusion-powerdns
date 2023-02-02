@@ -12,9 +12,6 @@ class Zones extends Endpoint
         $response = $this
             ->client
             ->get(sprintf('servers/%s/zones', $serverId));
-
-        $this->latestResponse = $response;
-
         if (! $response->successful()) {
             return null;
         }
@@ -30,9 +27,6 @@ class Zones extends Endpoint
         $response = $this
             ->client
             ->post(sprintf('servers/%s/zones/%s', $serverId, $domain));
-
-        $this->latestResponse = $response;
-
         if (! $response->successful()) {
             return null;
         }
@@ -45,9 +39,6 @@ class Zones extends Endpoint
         $response = $this
             ->client
             ->get(sprintf('servers/%s/zones/%s', $serverId, $zoneId));
-
-        $this->latestResponse = $response;
-
         if (! $response->successful()) {
             return null;
         }
@@ -57,7 +48,7 @@ class Zones extends Endpoint
 
     public function update(Zone $zone): bool
     {
-        $response = $this
+        return $this
             ->client
             ->patch('zones', Arr::only($zone->toArray(), [
                 'kind',
@@ -69,21 +60,15 @@ class Zones extends Endpoint
                 'dnssec',
                 'api_rectify',
                 'nsec3param',
-            ]));
-
-        $this->latestResponse = $response;
-
-        return $response->successful();
+            ]))
+            ->successful();
     }
 
     public function delete(string $serverId, string $zoneId): bool
     {
-        $response = $this
+        return $this
             ->client
-            ->delete(sprintf('servers/%s/zones/%s', $serverId, $zoneId));
-
-        $this->latestResponse = $response;
-
-        return $response->successful();
+            ->delete(sprintf('servers/%s/zones/%s', $serverId, $zoneId))
+            ->successful();
     }
 }
