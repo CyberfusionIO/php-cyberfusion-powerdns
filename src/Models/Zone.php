@@ -5,8 +5,8 @@ namespace Cyberfusion\PowerDNS\Models;
 use Cyberfusion\PowerDNS\Contracts\Requestable;
 use Cyberfusion\PowerDNS\Contracts\Responsable;
 use Cyberfusion\PowerDNS\Enums\ZoneKind;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use stdClass;
 
 class Zone implements Responsable, Requestable
 {
@@ -394,34 +394,34 @@ class Zone implements Responsable, Requestable
         return $this;
     }
 
-    public static function fromResponse(stdClass $data): self
+    public static function fromResponse(array $data): self
     {
         return new self(
-            id: $data->id,
-            name: $data->name,
-            url: $data->url,
-            kind: ZoneKind::from($data->kind),
+            id: Arr::get($data, 'id', ''),
+            name: Arr::get($data, 'name', ''),
+            url: Arr::get($data, 'url', ''),
+            kind: ZoneKind::tryFrom(Arr::get($data, 'kind')),
             rrsets: array_map(
-                fn (stdClass $rrset) => RRSet::fromResponse($rrset),
-                $data->rrsets
+                fn (array $rrset) => RRSet::fromResponse($rrset),
+                Arr::get($data, 'rrsets', [])
             ),
-            serial: $data->serial,
-            notifiedSerial: $data->notified_serial,
-            editedSerial: $data->edited_serial,
-            masters: $data->masters,
-            dnssec: $data->dnssec,
-            nsec3param: $data->nsec3param,
-            nsec3narrow: $data->nsec3narrow,
-            presigned: $data->presigned,
-            soaEdit: $data->soa_edit,
-            soaEditApi: $data->soa_edit_api,
-            apiRectify: $data->api_rectify,
-            zone: $data->zone,
-            catalog: $data->catalog,
-            account: $data->account,
-            nameservers: $data->nameservers,
-            masterTsigKeyIds: $data->master_tsig_key_ids,
-            slaveTsigKeyIds: $data->slave_tsig_key_ids
+            serial: Arr::get($data, 'serial', ''),
+            notifiedSerial: Arr::get($data, 'notified_serial', ''),
+            editedSerial: Arr::get($data, 'edited_serial', ''),
+            masters: Arr::get($data, 'masters', []),
+            dnssec: Arr::get($data, 'dnssec', false),
+            nsec3param: Arr::get($data, 'nsec3param', ''),
+            nsec3narrow: Arr::get($data, 'nsec3narrow', ''),
+            presigned: Arr::get($data, 'presigned', false),
+            soaEdit: Arr::get($data, 'soa_edit', ''),
+            soaEditApi: Arr::get($data, 'soa_edit_api', ''),
+            apiRectify: Arr::get($data, 'api_rectify', true),
+            zone: Arr::get($data, 'zone', ''),
+            catalog: Arr::get($data, 'catalog', ''),
+            account: Arr::get($data, 'account', ''),
+            nameservers: Arr::get($data, 'nameservers', []),
+            masterTsigKeyIds: Arr::get($data, 'master_tsig_key_ids', []),
+            slaveTsigKeyIds: Arr::get($data, 'slave_tsig_key_ids', []),
         );
     }
 

@@ -4,7 +4,7 @@ namespace Cyberfusion\PowerDNS\Models;
 
 use Cyberfusion\PowerDNS\Contracts\Requestable;
 use Cyberfusion\PowerDNS\Contracts\Responsable;
-use stdClass;
+use Illuminate\Support\Arr;
 
 class TSIGKey implements Responsable, Requestable
 {
@@ -79,13 +79,13 @@ class TSIGKey implements Responsable, Requestable
         return $this;
     }
 
-    public static function fromResponse(stdClass $data): self
+    public static function fromResponse(array $data): self
     {
         return new self(
-            name: $data->name,
-            id: $data->id,
-            algorithm: $data->algorithm,
-            key: $data->key
+            name: Arr::get($data, 'name', ''),
+            id: Arr::get($data, 'id', 0),
+            algorithm: Arr::get($data, 'algorithm', ''),
+            key: Arr::get($data, 'key', ''),
         );
     }
 

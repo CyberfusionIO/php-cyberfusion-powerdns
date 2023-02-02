@@ -11,10 +11,13 @@ class CryptoKeys extends Endpoint
         $response = $this
             ->client
             ->get(sprintf('servers/%s/zones/%s/cryptokeys', $serverId, $zoneId));
+
+        $this->latestResponse = $response;
+
         if (! $response->successful()) {
             return null;
         }
 
-        return CryptoKey::fromResponse(json_decode($response->body(), false, 512, JSON_THROW_ON_ERROR));
+        return CryptoKey::fromResponse($response->json());
     }
 }

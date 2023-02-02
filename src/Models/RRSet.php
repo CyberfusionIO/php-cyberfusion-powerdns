@@ -5,7 +5,7 @@ namespace Cyberfusion\PowerDNS\Models;
 use Cyberfusion\PowerDNS\Contracts\Requestable;
 use Cyberfusion\PowerDNS\Contracts\Responsable;
 use Cyberfusion\PowerDNS\Enums\ChangeType;
-use stdClass;
+use Illuminate\Support\Arr;
 
 class RRSet implements Responsable, Requestable
 {
@@ -119,20 +119,22 @@ class RRSet implements Responsable, Requestable
         return $this;
     }
 
-    public static function fromResponse(stdClass $data): self
+    public static function fromResponse(array $data): self
     {
         return new self(
-            name: $data->name,
-            type: $data->type,
-            ttl: $data->ttl,
-            changeType: ChangeType::from($data->changetype),
+            name: Arr::get($data, 'name', ''),
+            type: Arr::get($data, 'type', ''),
+            ttl: Arr::get($data, 'ttl', 3600),
+            changeType: Arr::get($data, 'changetype')
+                ? ChangeType::from(Arr::get($data, 'changetype'))
+                : ChangeType::Replace,
             records: array_map(
-                fn (stdClass $record) => Record::fromResponse($record),
-                $data->records
+                fn (array $record) => Record::fromResponse($record),
+                Arr::get($data, 'records', [])
             ),
             comments: array_map(
-                fn (stdClass $comment) => Comment::fromResponse($comment),
-                $data->comments
+                fn (array $comment) => Comment::fromResponse($comment),
+                Arr::get($data, 'comments', [])
             )
         );
     }

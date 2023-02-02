@@ -5,8 +5,8 @@ namespace Cyberfusion\PowerDNS\Models;
 use Cyberfusion\PowerDNS\Contracts\Requestable;
 use Cyberfusion\PowerDNS\Contracts\Responsable;
 use DateTimeInterface;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
-use stdClass;
 
 class Comment implements Responsable, Requestable
 {
@@ -63,12 +63,14 @@ class Comment implements Responsable, Requestable
         return $this;
     }
 
-    public static function fromResponse(stdClass $data): self
+    public static function fromResponse(array $data): self
     {
         return new self(
-            content: $data->content,
-            account: $data->account,
-            modifiedAt: Carbon::createFromTimestamp($data->modified_at)
+            content: Arr::get($data, 'content', ''),
+            account: Arr::get($data, 'account', ''),
+            modifiedAt: Arr::get($data, 'modified_at')
+                ? Carbon::createFromTimestamp(Arr::get($data, 'modified_at'))
+                : null
         );
     }
 

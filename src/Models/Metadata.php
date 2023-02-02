@@ -4,7 +4,7 @@ namespace Cyberfusion\PowerDNS\Models;
 
 use Cyberfusion\PowerDNS\Contracts\Requestable;
 use Cyberfusion\PowerDNS\Contracts\Responsable;
-use stdClass;
+use Illuminate\Support\Arr;
 
 class Metadata implements Responsable, Requestable
 {
@@ -45,11 +45,11 @@ class Metadata implements Responsable, Requestable
         return $this;
     }
 
-    public static function fromResponse(stdClass $data): self
+    public static function fromResponse(array $data): self
     {
         return new self(
-            kind: $data->kind,
-            metadata: $data->metdata
+            kind: Arr::get($data, 'kind', ''),
+            metadata: Arr::get($data, 'metdata', '')
         );
     }
 

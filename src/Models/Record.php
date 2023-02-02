@@ -4,7 +4,7 @@ namespace Cyberfusion\PowerDNS\Models;
 
 use Cyberfusion\PowerDNS\Contracts\Requestable;
 use Cyberfusion\PowerDNS\Contracts\Responsable;
-use stdClass;
+use Illuminate\Support\Arr;
 
 class Record implements Responsable, Requestable
 {
@@ -45,11 +45,11 @@ class Record implements Responsable, Requestable
         return $this;
     }
 
-    public static function fromResponse(stdClass $data): self
+    public static function fromResponse(array $data): self
     {
         return new self(
-            content: $data->content,
-            disabled: $data->disabled,
+            content: Arr::get($data, 'content', ''),
+            disabled: Arr::get($data, 'disabled', false),
         );
     }
 

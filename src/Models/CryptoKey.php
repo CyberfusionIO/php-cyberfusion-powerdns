@@ -4,7 +4,7 @@ namespace Cyberfusion\PowerDNS\Models;
 
 use Cyberfusion\PowerDNS\Contracts\Requestable;
 use Cyberfusion\PowerDNS\Contracts\Responsable;
-use stdClass;
+use Illuminate\Support\Arr;
 
 class CryptoKey implements Responsable, Requestable
 {
@@ -174,19 +174,19 @@ class CryptoKey implements Responsable, Requestable
         return $this;
     }
 
-    public static function fromResponse(stdClass $data): self
+    public static function fromResponse(array $data): self
     {
         return new self(
-            id: $data->id,
-            keyType: $data->keytype,
-            active: $data->active,
-            published: $data->published,
-            dnsKey: $data->dnskey,
-            ds: $data->ds,
-            cds: $data->cds,
-            privateKey: $data->privatekey,
-            algorithm: $data->algorithm,
-            bits: $data->bits
+            id: Arr::get($data, 'id', ''),
+            keyType: Arr::get($data, 'keytype', ''),
+            active: Arr::get($data, 'active', true),
+            published: Arr::get($data, 'published', true),
+            dnsKey: Arr::get($data, 'dnskey', ''),
+            ds: Arr::get($data, 'ds', []),
+            cds: Arr::get($data, 'cds', []),
+            privateKey: Arr::get($data, 'privatekey', ''),
+            algorithm: Arr::get($data, 'algorithm', ''),
+            bits: Arr::get($data, 'bits', 0)
         );
     }
 

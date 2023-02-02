@@ -5,7 +5,7 @@ namespace Cyberfusion\PowerDNS\Models;
 use Cyberfusion\PowerDNS\Contracts\Requestable;
 use Cyberfusion\PowerDNS\Contracts\Responsable;
 use Cyberfusion\PowerDNS\Enums\DaemonType;
-use stdClass;
+use Illuminate\Support\Arr;
 
 class Server implements Responsable, Requestable
 {
@@ -112,15 +112,17 @@ class Server implements Responsable, Requestable
         return $this;
     }
 
-    public static function fromResponse(stdClass $data): self
+    public static function fromResponse(array $data): self
     {
         return new self(
-            id: $data->id,
-            daemonType: DaemonType::from($data->daemon_type),
-            version: $data->version,
-            url: $data->url,
-            configUrl: $data->config_url,
-            zonesUrl: $data->zones_url
+            id: Arr::get($data, 'id', ''),
+            daemonType: Arr::get($data, 'daemon_type')
+                ? DaemonType::from(Arr::get($data, 'daemon_type'))
+                : null,
+            version: Arr::get($data, 'version', ''),
+            url: Arr::get($data, 'url', ''),
+            configUrl: Arr::get($data, 'config_url', ''),
+            zonesUrl: Arr::get($data, 'zones_url', '')
         );
     }
 

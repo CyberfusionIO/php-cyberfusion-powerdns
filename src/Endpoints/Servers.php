@@ -3,7 +3,6 @@
 namespace Cyberfusion\PowerDNS\Endpoints;
 
 use Cyberfusion\PowerDNS\Models\Server;
-use stdClass;
 
 class Servers extends Endpoint
 {
@@ -12,13 +11,16 @@ class Servers extends Endpoint
         $response = $this
             ->client
             ->get('servers');
+
+        $this->latestResponse = $response;
+
         if (! $response->successful()) {
             return null;
         }
 
         return array_map(
-            fn (stdClass $zone) => Server::fromResponse($zone),
-            json_decode($response->body(), false, 512, JSON_THROW_ON_ERROR)
+            fn (array $server) => Server::fromResponse($server),
+            $response->json()
         );
     }
 
@@ -27,10 +29,13 @@ class Servers extends Endpoint
         $response = $this
             ->client
             ->get(sprintf('servers/%s', $serverId));
+
+        $this->latestResponse = $response;
+
         if (! $response->successful()) {
             return null;
         }
 
-        return Server::fromResponse(json_decode($response->body(), false, 512, JSON_THROW_ON_ERROR));
+        return Server::fromResponse($response->json());
     }
 }

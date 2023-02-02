@@ -4,7 +4,6 @@ namespace Cyberfusion\PowerDNS\Endpoints;
 
 use Cyberfusion\PowerDNS\Models\Zone;
 use Illuminate\Support\Arr;
-use stdClass;
 
 class Zones extends Endpoint
 {
@@ -12,14 +11,17 @@ class Zones extends Endpoint
     {
         $response = $this
             ->client
-            ->get(sprintf('servers/%s/zones/', $serverId));
+            ->get(sprintf('servers/%s/zones', $serverId));
+
+        $this->latestResponse = $response;
+
         if (! $response->successful()) {
             return null;
         }
 
         return array_map(
-            fn (stdClass $zone) => Zone::fromResponse($zone),
-            json_decode($response->body(), false, 512, JSON_THROW_ON_ERROR)
+            fn (array $zone) => Zone::fromResponse($zone),
+            $response->json()
         );
     }
 
@@ -28,11 +30,14 @@ class Zones extends Endpoint
         $response = $this
             ->client
             ->post(sprintf('servers/%s/zones/%s', $serverId, $domain));
+
+        $this->latestResponse = $response;
+
         if (! $response->successful()) {
             return null;
         }
 
-        return Zone::fromResponse(json_decode($response->body(), false, 512, JSON_THROW_ON_ERROR));
+        return Zone::fromResponse($response->json());
     }
 
     public function get(string $serverId, string $zoneId): ?Zone
@@ -40,16 +45,19 @@ class Zones extends Endpoint
         $response = $this
             ->client
             ->get(sprintf('servers/%s/zones/%s', $serverId, $zoneId));
+
+        $this->latestResponse = $response;
+
         if (! $response->successful()) {
             return null;
         }
 
-        return Zone::fromResponse(json_decode($response->body(), false, 512, JSON_THROW_ON_ERROR));
+        return Zone::fromResponse($response->json());
     }
 
     public function update(Zone $zone): bool
     {
-        return $this
+        $response = $this
             ->client
             ->patch('zones', Arr::only($zone->toArray(), [
                 'kind',
@@ -61,15 +69,21 @@ class Zones extends Endpoint
                 'dnssec',
                 'api_rectify',
                 'nsec3param',
-            ]))
-            ->successful();
+            ]));
+
+        $this->latestResponse = $response;
+
+        return $response->successful();
     }
 
     public function delete(string $serverId, string $zoneId): bool
     {
-        return $this
+        $response = $this
             ->client
-            ->delete(sprintf('servers/%s/zones/%s', $serverId, $zoneId))
-            ->successful();
+            ->delete(sprintf('servers/%s/zones/%s', $serverId, $zoneId));
+
+        $this->latestResponse = $response;
+
+        return $response->successful();
     }
 }

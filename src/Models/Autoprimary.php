@@ -4,7 +4,7 @@ namespace Cyberfusion\PowerDNS\Models;
 
 use Cyberfusion\PowerDNS\Contracts\Requestable;
 use Cyberfusion\PowerDNS\Contracts\Responsable;
-use stdClass;
+use Illuminate\Support\Arr;
 
 class Autoprimary implements Responsable, Requestable
 {
@@ -61,12 +61,12 @@ class Autoprimary implements Responsable, Requestable
         return $this;
     }
 
-    public static function fromResponse(stdClass $data): self
+    public static function fromResponse(array $data): self
     {
         return new self(
-            ip: $data->ip,
-            nameserver: $data->nameserver,
-            account: $data->account
+            ip: Arr::get($data, 'ip'),
+            nameserver: Arr::get($data, 'nameserver'),
+            account: Arr::get($data, 'account')
         );
     }
 
