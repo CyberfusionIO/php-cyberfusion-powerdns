@@ -11,7 +11,8 @@ use Cyberfusion\PowerDNS\PowerDNS;
 $host = 'server:port';
 $apiKey = 'secret';
 
-$powerDns = new PowerDNS(new Client($host, $apiKey));
+$client = new Client($host, $apiKey);
+$powerDns = new PowerDNS($client);
 
 $servers = $powerDns
     ->servers()
@@ -26,6 +27,18 @@ $zone->setDnssec(true);
 $success = $powerDns
     ->zones()
     ->update($zone);
+```
+
+If you want to keep track or requests and responses, you can enable the client's recording functionality:
+
+```php
+$client->record();
+```
+
+And to get the requests/responses:
+
+```php
+[$request, $response] = $client->recorded()[0];
 ```
 
 ## Endpoints
