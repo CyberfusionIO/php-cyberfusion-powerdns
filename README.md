@@ -29,7 +29,7 @@ $success = $powerDns
     ->update($zone);
 ```
 
-If you want to keep track or requests and responses, you can enable the client's recording functionality:
+If you want to keep track of requests and responses, you can enable the client's recording functionality:
 
 ```php
 $client->record();
