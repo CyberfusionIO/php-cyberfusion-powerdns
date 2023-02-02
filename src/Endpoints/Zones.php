@@ -2,6 +2,7 @@
 
 namespace Cyberfusion\PowerDNS\Endpoints;
 
+use Cyberfusion\PowerDNS\Models\RRSet;
 use Cyberfusion\PowerDNS\Models\Zone;
 use Illuminate\Support\Arr;
 
@@ -46,11 +47,23 @@ class Zones extends Endpoint
         return Zone::fromResponse($response->json());
     }
 
-    public function update(Zone $zone): bool
+    public function updateRrsets(string $serverId, string $zoneId, array $rrsets): bool
     {
         return $this
             ->client
-            ->patch('zones', Arr::only($zone->toArray(), [
+            ->patch(sprintf('servers/%s/zones/%s', $serverId, $zoneId), [
+                'rrsets' => array_map(
+                    fn (RRSet $rrset) => $rrset->toArray(),
+                    $rrsets
+            )])
+            ->successful();
+    }
+
+    public function updateZoneData(string $serverId, Zone $zone): bool
+    {
+        return $this
+            ->client
+            ->put(sprintf('servers/%s/zones/%s', $serverId, $zone->getId()), Arr::only($zone->toArray(), [
                 'kind',
                 'masters',
                 'catalog',
