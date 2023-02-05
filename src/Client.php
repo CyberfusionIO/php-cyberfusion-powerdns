@@ -28,4 +28,9 @@ class Client extends Factory
             ->timeout(self::TIMEOUT)
             ->withUserAgent(self::USER_AGENT);
     }
+
+    public function record(): self
+    {
+        return parent::record();
+    }
 }
