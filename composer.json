@@ -1,6 +1,6 @@
 {
   "name": "cyberfusion/laravel-powerdns",
-  "description": "Client for the PowerDNS api",
+  "description": "Client for the PowerDNS API",
   "type": "library",
   "license": "proprietary",
   "authors": [
