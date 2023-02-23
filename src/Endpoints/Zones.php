@@ -25,9 +25,11 @@ class Zones extends Endpoint
 
     public function create(string $serverId, string $domain): ?Zone
     {
+        $zone = new Zone(name: $domain);
+
         $response = $this
             ->client
-            ->post(sprintf('servers/%s/zones/%s', $serverId, $domain));
+            ->post(sprintf('servers/%s/zones', $serverId), $zone->toArray());
         if (! $response->successful()) {
             return null;
         }
@@ -39,7 +41,7 @@ class Zones extends Endpoint
     {
         $response = $this
             ->client
-            ->get(sprintf('servers/%s/zones/%s', $serverId, $zoneId));
+            ->get(sprintf('servers/%s/zones/%s?rrsets=true', $serverId, $zoneId));
         if (! $response->successful()) {
             return null;
         }
