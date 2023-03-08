@@ -29,6 +29,12 @@ $success = $powerDns
     ->update($zone);
 ```
 
+## Endpoints
+
+CryptoKeys, Servers and Zones are available.
+
+## Record all requests and responses
+
 If you want to keep track of requests and responses, you can enable the client's recording functionality:
 
 ```php
@@ -41,6 +47,6 @@ And to get the requests/responses:
 [$request, $response] = $client->recorded()[0];
 ```
 
-## Endpoints
+## Handling failed response
 
-CryptoKeys, Servers and Zones are available.
+When a request fails, a `Illuminate\Http\Client\RequestException` will be thrown.
