@@ -4,18 +4,20 @@ namespace Cyberfusion\PowerDNS\Endpoints;
 
 use Cyberfusion\PowerDNS\Models\RRSet;
 use Cyberfusion\PowerDNS\Models\Zone;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Arr;
 
 class Zones extends Endpoint
 {
+    /**
+     * @throws RequestException
+     */
     public function list(string $serverId): ?array
     {
         $response = $this
             ->client
-            ->get(sprintf('servers/%s/zones', $serverId));
-        if (! $response->successful()) {
-            return null;
-        }
+            ->get(sprintf('servers/%s/zones', $serverId))
+            ->throw();
 
         return array_map(
             fn (array $zone) => Zone::fromResponse($zone),
@@ -23,47 +25,55 @@ class Zones extends Endpoint
         );
     }
 
+    /**
+     * @throws RequestException
+     */
     public function create(string $serverId, string $domain): ?Zone
     {
         $zone = new Zone(name: $domain);
 
         $response = $this
             ->client
-            ->post(sprintf('servers/%s/zones', $serverId), $zone->toArray());
-        if (! $response->successful()) {
-            return null;
-        }
+            ->post(sprintf('servers/%s/zones', $serverId), $zone->toArray())
+            ->throw();
 
         return Zone::fromResponse($response->json());
     }
 
+    /**
+     * @throws RequestException
+     */
     public function get(string $serverId, string $zoneId): ?Zone
     {
         $response = $this
             ->client
-            ->get(sprintf('servers/%s/zones/%s?rrsets=true', $serverId, $zoneId));
-        if (! $response->successful()) {
-            return null;
-        }
+            ->get(sprintf('servers/%s/zones/%s?rrsets=true', $serverId, $zoneId))
+            ->throw();
 
         return Zone::fromResponse($response->json());
     }
 
-    public function updateRrsets(string $serverId, string $zoneId, array $rrsets): bool
+    /**
+     * @throws RequestException
+     */
+    public function updateRrsets(string $serverId, string $zoneId, array $rrsets): void
     {
-        return $this
+        $this
             ->client
             ->patch(sprintf('servers/%s/zones/%s', $serverId, $zoneId), [
                 'rrsets' => array_map(
                     fn (RRSet $rrset) => $rrset->toArray(),
                     $rrsets
             )])
-            ->successful();
+            ->throw();
     }
 
-    public function updateZoneData(string $serverId, Zone $zone): bool
+    /**
+     * @throws RequestException
+     */
+    public function updateZoneData(string $serverId, Zone $zone): void
     {
-        return $this
+        $this
             ->client
             ->put(sprintf('servers/%s/zones/%s', $serverId, $zone->getId()), Arr::only($zone->toArray(), [
                 'kind',
@@ -76,14 +86,17 @@ class Zones extends Endpoint
                 'api_rectify',
                 'nsec3param',
             ]))
-            ->successful();
+            ->throw();
     }
 
-    public function delete(string $serverId, string $zoneId): bool
+    /**
+     * @throws RequestException
+     */
+    public function delete(string $serverId, string $zoneId): void
     {
-        return $this
+        $this
             ->client
             ->delete(sprintf('servers/%s/zones/%s', $serverId, $zoneId))
-            ->successful();
+            ->throw();
     }
 }
