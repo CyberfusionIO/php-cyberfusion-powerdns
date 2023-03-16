@@ -1,8 +1,12 @@
-# PowerDNS
+# laravel-powerdns
+
+PHP client for PowerDNS API.
 
 Documentation: https://doc.powerdns.com/authoritative/http-api/index.html
 
-## Getting started
+# Usage
+
+## Example
 
 ```php
 use Cyberfusion\PowerDNS\Client;
@@ -29,19 +33,15 @@ $success = $powerDns
     ->update($zone);
 ```
 
-## Endpoints
-
-CryptoKeys, Servers and Zones are available.
-
 ## Record all requests and responses
 
-If you want to keep track of requests and responses, you can enable the client's recording functionality:
+To keep track of requests and responses, enable the recording functionality:
 
 ```php
 $client->record();
 ```
 
-And to get the requests/responses:
+... and to get the requests/responses:
 
 ```php
 [$request, $response] = $client->recorded()[0];
@@ -49,4 +49,4 @@ And to get the requests/responses:
 
 ## Handling failed response
 
-When a request fails, a `Illuminate\Http\Client\RequestException` will be thrown.
+When a request fails, `Illuminate\Http\Client\RequestException` is thrown.
