@@ -12,13 +12,13 @@
   "require": {
     "php": ">=8.1",
     "guzzlehttp/guzzle": "^7.5",
-    "illuminate/http": "^9.50",
-    "illuminate/support": "^9.50"
+    "illuminate/http": "^9.50|^10.0",
+    "illuminate/support": "^9.50|^10.0"
   },
   "require-dev": {
     "laravel/pint": "^1.4",
     "phpstan/phpstan": "^1.9",
-    "phpunit/phpunit": "^9.5"
+    "phpunit/phpunit": "^10"
   },
   "autoload": {
     "psr-4": {
