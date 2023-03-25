@@ -64,7 +64,7 @@ class Zones extends Endpoint
                 'rrsets' => array_map(
                     fn (RRSet $rrset) => $rrset->toArray(),
                     $rrsets
-            )])
+                )])
             ->throw();
     }
 
