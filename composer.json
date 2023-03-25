@@ -1,5 +1,5 @@
 {
-  "name": "cyberfusion/laravel-powerdns",
+  "name": "cyberfusion/powerdns",
   "description": "PHP client for PowerDNS API",
   "type": "library",
   "license": "proprietary",
