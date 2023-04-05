@@ -26,9 +26,7 @@ class PowerDNS
 
     public function httpClient(): PendingRequest
     {
-        $pendingRequest = $this->client !== null
-            ? (new PendingRequest($this->client))
-            : Http::withUserAgent(self::USER_AGENT)->timeout(self::TIMEOUT);
+        $pendingRequest = $this->client ?? Http::withUserAgent(self::USER_AGENT)->timeout(self::TIMEOUT);
 
         return $pendingRequest
             ->acceptJson()
