@@ -13,7 +13,8 @@ class Servers extends Endpoint
     public function list(): ?array
     {
         $response = $this
-            ->client
+            ->powerDNS
+            ->httpClient()
             ->get('servers')
             ->throw();
 
@@ -29,7 +30,8 @@ class Servers extends Endpoint
     public function get(string $serverId): ?Server
     {
         $response = $this
-            ->client
+            ->powerDNS
+            ->httpClient()
             ->get(sprintf('servers/%s', $serverId))
             ->throw();
 

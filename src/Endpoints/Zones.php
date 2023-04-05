@@ -15,7 +15,8 @@ class Zones extends Endpoint
     public function list(string $serverId): ?array
     {
         $response = $this
-            ->client
+            ->powerDNS
+            ->httpClient()
             ->get(sprintf('servers/%s/zones', $serverId))
             ->throw();
 
@@ -32,9 +33,15 @@ class Zones extends Endpoint
     {
         $zone = new Zone(name: $domain);
 
+        $data = $zone->toArray();
+        if ($data['dnssec'] === false) {
+            unset($data['nsec3param'], $data['nsec3narrow']);
+        }
+
         $response = $this
-            ->client
-            ->post(sprintf('servers/%s/zones', $serverId), $zone->toArray())
+            ->powerDNS
+            ->httpClient()
+            ->post(sprintf('servers/%s/zones', $serverId), $data)
             ->throw();
 
         return Zone::fromResponse($response->json());
@@ -46,7 +53,8 @@ class Zones extends Endpoint
     public function get(string $serverId, string $zoneId): ?Zone
     {
         $response = $this
-            ->client
+            ->powerDNS
+            ->httpClient()
             ->get(sprintf('servers/%s/zones/%s?rrsets=true', $serverId, $zoneId))
             ->throw();
 
@@ -59,7 +67,8 @@ class Zones extends Endpoint
     public function updateRrsets(string $serverId, string $zoneId, array $rrsets): void
     {
         $this
-            ->client
+            ->powerDNS
+            ->httpClient()
             ->patch(sprintf('servers/%s/zones/%s', $serverId, $zoneId), [
                 'rrsets' => array_map(
                     fn (RRSet $rrset) => $rrset->toArray(),
@@ -74,7 +83,8 @@ class Zones extends Endpoint
     public function updateZoneData(string $serverId, Zone $zone): void
     {
         $this
-            ->client
+            ->powerDNS
+            ->httpClient()
             ->put(sprintf('servers/%s/zones/%s', $serverId, $zone->getId()), Arr::only($zone->toArray(), [
                 'kind',
                 'masters',
@@ -95,7 +105,8 @@ class Zones extends Endpoint
     public function delete(string $serverId, string $zoneId): void
     {
         $this
-            ->client
+            ->powerDNS
+            ->httpClient()
             ->delete(sprintf('servers/%s/zones/%s', $serverId, $zoneId))
             ->throw();
     }
