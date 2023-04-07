@@ -13,7 +13,8 @@ class CryptoKeys extends Endpoint
     public function get(string $serverId, string $zoneId): ?CryptoKey
     {
         $response = $this
-            ->client
+            ->powerDNS
+            ->httpClient()
             ->get(sprintf('servers/%s/zones/%s/cryptokeys', $serverId, $zoneId))
             ->throw();
 

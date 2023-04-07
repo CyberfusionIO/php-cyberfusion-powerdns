@@ -9,14 +9,12 @@ Documentation: https://doc.powerdns.com/authoritative/http-api/index.html
 ## Example
 
 ```php
-use Cyberfusion\PowerDNS\Client;
 use Cyberfusion\PowerDNS\PowerDNS;
 
 $host = 'server:port';
 $apiKey = 'secret';
 
-$client = new Client($host, $apiKey);
-$powerDns = new PowerDNS($client);
+$powerDns = new PowerDNS($host, $apiKey);
 
 $servers = $powerDns
     ->servers()
@@ -31,20 +29,6 @@ $zone->setDnssec(true);
 $success = $powerDns
     ->zones()
     ->update($zone);
-```
-
-## Record all requests and responses
-
-To keep track of requests and responses, enable the recording functionality:
-
-```php
-$client->record();
-```
-
-... and to get the requests/responses:
-
-```php
-[$request, $response] = $client->recorded()[0];
 ```
 
 ## Handling failed response

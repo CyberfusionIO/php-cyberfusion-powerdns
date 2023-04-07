@@ -40,14 +40,10 @@
     "test:no-coverage": "vendor/bin/phpunit --no-coverage",
     "pint:check": "vendor/bin/pint --test",
     "pint:fix": "vendor/bin/pint",
-    "rector:check": "@rector:fix --dry-run",
-    "rector:fix": "@php vendor/bin/rector process",
     "lint:check": [
-      "@rector:check",
       "@pint:check"
     ],
     "lint:fix": [
-      "@rector:fix",
       "@pint:fix"
     ]
   },
