@@ -8,7 +8,7 @@ use Cyberfusion\PowerDNS\Enums\ChangeType;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
-class RRSet implements Responsable, Requestable
+class RRSet implements Requestable, Responsable
 {
     private string $name;
 

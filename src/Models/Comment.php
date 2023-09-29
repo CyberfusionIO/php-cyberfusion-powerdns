@@ -8,7 +8,7 @@ use DateTimeInterface;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 
-class Comment implements Responsable, Requestable
+class Comment implements Requestable, Responsable
 {
     private string $content;
 
@@ -19,7 +19,7 @@ class Comment implements Responsable, Requestable
     public function __construct(
         string $content = '',
         string $account = '',
-        ?DateTimeInterface $modifiedAt = null
+        DateTimeInterface $modifiedAt = null
     ) {
         $this
             ->setContent($content)
