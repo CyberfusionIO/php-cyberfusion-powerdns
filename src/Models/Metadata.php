@@ -6,7 +6,7 @@ use Cyberfusion\PowerDNS\Contracts\Requestable;
 use Cyberfusion\PowerDNS\Contracts\Responsable;
 use Illuminate\Support\Arr;
 
-class Metadata implements Responsable, Requestable
+class Metadata implements Requestable, Responsable
 {
     private string $kind;
 

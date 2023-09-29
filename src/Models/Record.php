@@ -6,7 +6,7 @@ use Cyberfusion\PowerDNS\Contracts\Requestable;
 use Cyberfusion\PowerDNS\Contracts\Responsable;
 use Illuminate\Support\Arr;
 
-class Record implements Responsable, Requestable
+class Record implements Requestable, Responsable
 {
     private string $content;
 

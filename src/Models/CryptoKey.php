@@ -6,7 +6,7 @@ use Cyberfusion\PowerDNS\Contracts\Requestable;
 use Cyberfusion\PowerDNS\Contracts\Responsable;
 use Illuminate\Support\Arr;
 
-class CryptoKey implements Responsable, Requestable
+class CryptoKey implements Requestable, Responsable
 {
     private string $type = 'Cryptokey';
 

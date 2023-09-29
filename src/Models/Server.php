@@ -7,7 +7,7 @@ use Cyberfusion\PowerDNS\Contracts\Responsable;
 use Cyberfusion\PowerDNS\Enums\DaemonType;
 use Illuminate\Support\Arr;
 
-class Server implements Responsable, Requestable
+class Server implements Requestable, Responsable
 {
     private string $id;
 
