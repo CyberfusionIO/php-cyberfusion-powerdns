@@ -6,6 +6,7 @@ use Cyberfusion\PowerDNS\Contracts\Requestable;
 use Cyberfusion\PowerDNS\Contracts\Responsable;
 use Cyberfusion\PowerDNS\Enums\ChangeType;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class RRSet implements Responsable, Requestable
 {
@@ -47,7 +48,7 @@ class RRSet implements Responsable, Requestable
 
     public function setName(string $name): RRSet
     {
-        $this->name = $name;
+        $this->name = Str::finish($name, '.');
 
         return $this;
     }
