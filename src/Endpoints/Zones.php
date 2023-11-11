@@ -61,6 +61,7 @@ class Zones extends Endpoint
 
     /**
      * @param array<RRSet> $rrsets
+     *
      * @throws RequestException
      */
     public function updateRrsets(string $serverId, string $zoneId, array $rrsets): void
