@@ -29,10 +29,8 @@ class Zones extends Endpoint
     /**
      * @throws RequestException
      */
-    public function create(string $serverId, string $domain): ?Zone
+    public function create(string $serverId, Zone $zone): ?Zone
     {
-        $zone = new Zone(name: $domain);
-
         $data = $zone->toArray();
         if ($data['dnssec'] === false) {
             unset($data['nsec3param'], $data['nsec3narrow']);
@@ -62,6 +60,8 @@ class Zones extends Endpoint
     }
 
     /**
+     * @param array<RRSet> $rrsets
+     *
      * @throws RequestException
      */
     public function updateRrsets(string $serverId, string $zoneId, array $rrsets): void
