@@ -10,6 +10,7 @@ Documentation: https://doc.powerdns.com/authoritative/http-api/index.html
 
 ```php
 use Cyberfusion\PowerDNS\PowerDNS;
+use Cyberfusion\PowerDNS\Models\Zone;
 
 $host = 'server:port';
 $apiKey = 'secret';
@@ -22,7 +23,7 @@ $servers = $powerDns
 
 $zone = $powerDns
     ->zones()
-    ->create($server[0]->getId(), 'cyberfusion.nl');
+    ->create($server[0]->getId(), (new Zone(name: 'cyberfusion.nl'));
 
 $zone->setDnssec(true);
 
