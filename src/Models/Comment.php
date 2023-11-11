@@ -4,9 +4,11 @@ namespace Cyberfusion\PowerDNS\Models;
 
 use Cyberfusion\PowerDNS\Contracts\Requestable;
 use Cyberfusion\PowerDNS\Contracts\Responsable;
+use Cyberfusion\PowerDNS\Exceptions\CommentException;
 use DateTimeInterface;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class Comment implements Requestable, Responsable
 {
@@ -46,6 +48,10 @@ class Comment implements Requestable, Responsable
 
     public function setAccount(string $account): self
     {
+        if (Str::length($account) > 40) {
+            throw CommentException::accountLengthExceeded();
+        }
+
         $this->account = $account;
 
         return $this;
