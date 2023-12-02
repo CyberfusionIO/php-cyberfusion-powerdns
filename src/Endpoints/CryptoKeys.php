@@ -10,7 +10,7 @@ class CryptoKeys extends Endpoint
     /**
      * @throws RequestException
      */
-    public function get(string $serverId, string $zoneId): ?CryptoKey
+    public function get(string $serverId, string $zoneId): array
     {
         $response = $this
             ->powerDNS
@@ -18,6 +18,9 @@ class CryptoKeys extends Endpoint
             ->get(sprintf('servers/%s/zones/%s/cryptokeys', $serverId, $zoneId))
             ->throw();
 
-        return CryptoKey::fromResponse($response->json());
+        return array_map(
+            fn (array $cryptoKey) => CryptoKey::fromResponse($cryptoKey),
+            $response->json() ?? []
+        );
     }
 }
