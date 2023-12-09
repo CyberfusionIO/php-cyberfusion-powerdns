@@ -10,48 +10,19 @@ class CryptoKey implements Requestable, Responsable
 {
     private string $type = 'Cryptokey';
 
-    private int $id;
-
-    private string $keyType;
-
-    private bool $active;
-
-    private bool $published;
-
-    private string $dnsKey;
-
-    private array $ds;
-
-    private array $cds;
-
-    private string $privateKey;
-
-    private string $algorithm;
-
-    private int $bits;
-
     public function __construct(
-        int $id = 0,
-        string $keyType = '',
-        bool $active = true,
-        bool $published = true,
-        string $dnsKey = '',
-        array $ds = [],
-        array $cds = [],
-        string $privateKey = '',
-        string $algorithm = '',
-        int $bits = 0
+        private int $id = 0,
+        private string $keyType = '',
+        private bool $active = true,
+        private bool $published = true,
+        private string $dnsKey = '',
+        private array $ds = [],
+        private array $cds = [],
+        private string $privateKey = '',
+        private string $algorithm = '',
+        private int $bits = 0,
+        private int $flags = 0,
     ) {
-        $this->id = $id;
-        $this->keyType = $keyType;
-        $this->active = $active;
-        $this->published = $published;
-        $this->dnsKey = $dnsKey;
-        $this->ds = $ds;
-        $this->cds = $cds;
-        $this->privateKey = $privateKey;
-        $this->algorithm = $algorithm;
-        $this->bits = $bits;
     }
 
     public function getId(): int
@@ -138,6 +109,20 @@ class CryptoKey implements Requestable, Responsable
         return $this;
     }
 
+    public function getPublicKey(): string
+    {
+        $keyParts = explode(' ', $this->dnsKey);
+
+        return $keyParts[3] ?? '';
+    }
+
+    public function getProtocol(): int
+    {
+        $keyParts = explode(' ', $this->dnsKey);
+
+        return (int) ($keyParts[1] ?? 0);
+    }
+
     public function getPrivateKey(): string
     {
         return $this->privateKey;
@@ -174,6 +159,16 @@ class CryptoKey implements Requestable, Responsable
         return $this;
     }
 
+    public function getFlags(): int
+    {
+        return $this->flags;
+    }
+
+    public function setFlags(int $flags): void
+    {
+        $this->flags = $flags;
+    }
+
     public static function fromResponse(array $data): self
     {
         return new self(
@@ -186,7 +181,8 @@ class CryptoKey implements Requestable, Responsable
             cds: Arr::get($data, 'cds', []),
             privateKey: Arr::get($data, 'privatekey', ''),
             algorithm: Arr::get($data, 'algorithm', ''),
-            bits: Arr::get($data, 'bits', 0)
+            bits: Arr::get($data, 'bits', 0),
+            flags: Arr::get($data, 'flags', 0),
         );
     }
 
@@ -204,6 +200,7 @@ class CryptoKey implements Requestable, Responsable
             'privatekey' => $this->privateKey,
             'algorithm' => $this->algorithm,
             'bits' => $this->bits,
+            'flags' => $this->flags,
         ];
     }
 }

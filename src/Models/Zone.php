@@ -73,9 +73,9 @@ class Zone implements Requestable, Responsable
         string $soaEdit = 'INCEPTION-INCREMENT',
         string $soaEditApi = 'SOA-EDIT-INCREASE',
         bool $apiRectify = true,
-        string $zone = null,
-        string $catalog = null,
-        string $account = null,
+        ?string $zone = null,
+        ?string $catalog = null,
+        ?string $account = null,
         array $nameservers = [],
         array $masterTsigKeyIds = [],
         array $slaveTsigKeyIds = []

@@ -21,7 +21,7 @@ class Comment implements Requestable, Responsable
     public function __construct(
         string $content = '',
         string $account = '',
-        DateTimeInterface $modifiedAt = null
+        ?DateTimeInterface $modifiedAt = null
     ) {
         $this
             ->setContent($content)
