@@ -123,6 +123,13 @@ class CryptoKey implements Requestable, Responsable
         return (int) ($keyParts[1] ?? 0);
     }
 
+    public function getDnsKeyAlgorithm(): int
+    {
+        $keyParts = explode(' ', $this->dnsKey);
+
+        return (int) ($keyParts[2] ?? 0);
+    }
+
     public function getPrivateKey(): string
     {
         return $this->privateKey;
