@@ -21,8 +21,8 @@ class Zones extends Endpoint
             ->throw();
 
         return array_map(
-            fn (array $zone) => Zone::fromResponse($zone),
-            $response->json()
+            fn(array $zone) => Zone::fromResponse($zone),
+            $response->json(),
         );
     }
 
@@ -71,8 +71,8 @@ class Zones extends Endpoint
             ->httpClient()
             ->patch(sprintf('servers/%s/zones/%s', $serverId, $zoneId), [
                 'rrsets' => array_map(
-                    fn (RRSet $rrset) => $rrset->toArray(),
-                    $rrsets
+                    fn(RRSet $rrset) => $rrset->toArray(),
+                    $rrsets,
                 )])
             ->throw();
     }

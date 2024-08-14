@@ -30,7 +30,7 @@ class RRSet implements Requestable, Responsable
         ?int $ttl = 3600,
         ChangeType $changeType = ChangeType::Replace,
         array $records = [],
-        array $comments = []
+        array $comments = [],
     ) {
         $this
             ->setName($name)
@@ -130,13 +130,13 @@ class RRSet implements Requestable, Responsable
                 ? ChangeType::from(Arr::get($data, 'changetype'))
                 : ChangeType::Replace,
             records: array_map(
-                fn (array $record) => Record::fromResponse($record),
-                Arr::get($data, 'records', [])
+                fn(array $record) => Record::fromResponse($record),
+                Arr::get($data, 'records', []),
             ),
             comments: array_map(
-                fn (array $comment) => Comment::fromResponse($comment),
-                Arr::get($data, 'comments', [])
-            )
+                fn(array $comment) => Comment::fromResponse($comment),
+                Arr::get($data, 'comments', []),
+            ),
         );
     }
 
@@ -150,12 +150,12 @@ class RRSet implements Requestable, Responsable
                 ->changeType
                 ->value,
             'records' => array_map(
-                fn (Record $record) => $record->toArray(),
-                $this->records
+                fn(Record $record) => $record->toArray(),
+                $this->records,
             ),
             'comments' => array_map(
-                fn (Comment $comment) => $comment->toArray(),
-                $this->comments
+                fn(Comment $comment) => $comment->toArray(),
+                $this->comments,
             ),
         ];
     }

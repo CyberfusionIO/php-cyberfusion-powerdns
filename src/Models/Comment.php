@@ -21,7 +21,7 @@ class Comment implements Requestable, Responsable
     public function __construct(
         string $content = '',
         string $account = '',
-        ?DateTimeInterface $modifiedAt = null
+        ?DateTimeInterface $modifiedAt = null,
     ) {
         $this
             ->setContent($content)
@@ -76,7 +76,7 @@ class Comment implements Requestable, Responsable
             account: Arr::get($data, 'account', ''),
             modifiedAt: Arr::get($data, 'modified_at')
                 ? Carbon::createFromTimestamp(Arr::get($data, 'modified_at'))
-                : null
+                : null,
         );
     }
 

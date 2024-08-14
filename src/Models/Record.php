@@ -14,7 +14,7 @@ class Record implements Requestable, Responsable
 
     public function __construct(
         string $content = '',
-        bool $disabled = false
+        bool $disabled = false,
     ) {
         $this
             ->setContent($content)
