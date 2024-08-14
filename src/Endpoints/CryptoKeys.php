@@ -19,8 +19,8 @@ class CryptoKeys extends Endpoint
             ->throw();
 
         return array_map(
-            fn (array $cryptoKey) => CryptoKey::fromResponse($cryptoKey),
-            $response->json() ?? []
+            fn(array $cryptoKey) => CryptoKey::fromResponse($cryptoKey),
+            $response->json() ?? [],
         );
     }
 }

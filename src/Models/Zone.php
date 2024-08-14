@@ -78,7 +78,7 @@ class Zone implements Requestable, Responsable
         ?string $account = null,
         array $nameservers = [],
         array $masterTsigKeyIds = [],
-        array $slaveTsigKeyIds = []
+        array $slaveTsigKeyIds = [],
     ) {
         $this
             ->setId($id)
@@ -120,7 +120,7 @@ class Zone implements Requestable, Responsable
     public function getName(): string
     {
         if (! Str::endsWith($this->name, '.')) {
-            return $this->name.'.';
+            return $this->name . '.';
         }
 
         return $this->name;
@@ -364,7 +364,7 @@ class Zone implements Requestable, Responsable
 
                 return $nameserver;
             },
-            $nameservers
+            $nameservers,
         );
 
         return $this;
@@ -402,8 +402,8 @@ class Zone implements Requestable, Responsable
             url: Arr::get($data, 'url', ''),
             kind: ZoneKind::tryFrom(Arr::get($data, 'kind')),
             rrsets: array_map(
-                fn (array $rrset) => RRSet::fromResponse($rrset),
-                Arr::get($data, 'rrsets', [])
+                fn(array $rrset) => RRSet::fromResponse($rrset),
+                Arr::get($data, 'rrsets', []),
             ),
             serial: Arr::get($data, 'serial', ''),
             notifiedSerial: Arr::get($data, 'notified_serial', ''),
@@ -436,8 +436,8 @@ class Zone implements Requestable, Responsable
                 ->kind
                 ->value,
             'rrsets' => array_map(
-                fn (RRSet $rrset) => $rrset->toArray(),
-                $this->rrsets
+                fn(RRSet $rrset) => $rrset->toArray(),
+                $this->rrsets,
             ),
             'serial' => $this->serial,
             'notified_serial' => $this->notifiedSerial,

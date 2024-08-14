@@ -15,12 +15,12 @@ class PowerDNS
 
     private const VERSION = '1.0.0';
 
-    private const USER_AGENT = 'cyberfusion-powerdns-client/'.self::VERSION;
+    private const USER_AGENT = 'cyberfusion-powerdns-client/' . self::VERSION;
 
     public function __construct(
         private readonly string $host,
         private readonly string $apiKey,
-        private readonly ?Factory $client = null
+        private readonly ?Factory $client = null,
     ) {
     }
 

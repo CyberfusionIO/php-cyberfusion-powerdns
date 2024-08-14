@@ -14,7 +14,7 @@ class Metadata implements Requestable, Responsable
 
     public function __construct(
         string $kind = '',
-        array $metadata = []
+        array $metadata = [],
     ) {
         $this
             ->setKind($kind)
@@ -49,7 +49,7 @@ class Metadata implements Requestable, Responsable
     {
         return new self(
             kind: Arr::get($data, 'kind', ''),
-            metadata: Arr::get($data, 'metdata', '')
+            metadata: Arr::get($data, 'metdata', ''),
         );
     }
 

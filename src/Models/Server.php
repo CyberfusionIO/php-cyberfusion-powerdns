@@ -29,7 +29,7 @@ class Server implements Requestable, Responsable
         string $version = '',
         string $url = '',
         string $configUrl = '',
-        string $zonesUrl = ''
+        string $zonesUrl = '',
     ) {
         $this
             ->setId($id)
@@ -122,7 +122,7 @@ class Server implements Requestable, Responsable
             version: Arr::get($data, 'version', ''),
             url: Arr::get($data, 'url', ''),
             configUrl: Arr::get($data, 'config_url', ''),
-            zonesUrl: Arr::get($data, 'zones_url', '')
+            zonesUrl: Arr::get($data, 'zones_url', ''),
         );
     }
 

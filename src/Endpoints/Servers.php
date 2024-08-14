@@ -19,8 +19,8 @@ class Servers extends Endpoint
             ->throw();
 
         return array_map(
-            fn (array $server) => Server::fromResponse($server),
-            $response->json()
+            fn(array $server) => Server::fromResponse($server),
+            $response->json(),
         );
     }
 
