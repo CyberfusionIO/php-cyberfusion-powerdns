@@ -2,11 +2,12 @@
   "name": "cyberfusion/powerdns",
   "description": "PHP client for PowerDNS API",
   "type": "library",
-  "license": "proprietary",
+  "license": "MIT",
   "authors": [
     {
       "name": "Dick van der Heiden",
-      "email": "info@vdhicts.nl"
+      "email": "dick@goedemiddag.nl",
+      "role": "Developer"
     }
   ],
   "require": {
