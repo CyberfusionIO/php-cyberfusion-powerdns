@@ -3,13 +3,10 @@
   "description": "Easy-to-use PHP client for the PowerDNS API.",
   "type": "library",
   "license": "MIT",
-  "authors": [
-    {
-      "name": "Dick van der Heiden",
-      "email": "dick@goedemiddag.nl",
-      "role": "Developer"
-    }
-  ],
+  "support": {
+      "security": "https://cyberfusion.io/content/responsible-disclosure-policy",
+      "email": "support@cyberfusion.io"
+  },
   "require": {
     "php": "^8.3",
     "guzzlehttp/guzzle": "^7.5",
