@@ -1,6 +1,6 @@
 {
   "name": "cyberfusion/powerdns",
-  "description": "PHP client for PowerDNS API",
+  "description": "Easy-to-use PHP client for the PowerDNS API.",
   "type": "library",
   "license": "MIT",
   "authors": [
