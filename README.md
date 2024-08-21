@@ -1,22 +1,18 @@
-# PowerDNS
+# php-cyberfusion-powerdns
 
-This package provides an easy-to-use PHP client for the PowerDNS API.
+Easy-to-use PHP client for the PowerDNS API.
 
-The documentation of the PowerDNS itself can be found at https://doc.powerdns.com/authoritative/http-api/index.html
+PowerDNS API documentation: https://doc.powerdns.com/authoritative/http-api/index.html
+
+# Install
+
+## Composer
+
+Run the following command to install the package from Packagist:
+
+    composer require cyberfusion/powerdns
 
 # Usage
-
-## Requirements
-
-This package requires Laravel 10+ and PHP 8.3 or higher.
-
-## Installation
-
-You can install the package via composer:
-
-```bash
-composer require cyberfusion/powerdns
-```
 
 ## Example
 
@@ -43,25 +39,3 @@ $success = $powerDns->zones()->updateZoneData($zone);
 ## Handling failed response
 
 When a request fails, a `Illuminate\Http\Client\RequestException` is thrown.
-
-## Tests
-
-Unit tests are available in the `tests` directory. Run:
-
-`composer test`
-
-To generate a code coverage report in the `build/report` directory, run:
-
-`composer test:coverage`
-
-## Contributing
-
-Contributions are welcome. See the [contributing guidelines](CONTRIBUTING.md).
-
-## Security
-
-If you discover any security related issues, please email support@cyberfusion.io instead of using the issue tracker.
-
-## License
-
-This client is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
