@@ -39,3 +39,4 @@ $success = $powerDns->zones()->updateZoneData($zone);
 ## Handling failed response
 
 When a request fails, a `Illuminate\Http\Client\RequestException` is thrown.
+
