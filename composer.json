@@ -7,6 +7,8 @@
         "security": "https://cyberfusion.io/content/responsible-disclosure-policy",
         "email": "support@cyberfusion.io"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": "^8.3",
         "guzzlehttp/guzzle": "^7.5",
@@ -43,6 +45,4 @@
         "lint:check": "vendor/bin/ecs",
         "lint:fix": "vendor/bin/ecs --fix"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true
 }
