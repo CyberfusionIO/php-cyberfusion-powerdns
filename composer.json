@@ -1,48 +1,48 @@
 {
-  "name": "cyberfusion/powerdns",
-  "description": "Easy-to-use PHP client for the PowerDNS API.",
-  "type": "library",
-  "license": "MIT",
-  "support": {
-      "security": "https://cyberfusion.io/content/responsible-disclosure-policy",
-      "email": "support@cyberfusion.io"
-  },
-  "require": {
-    "php": "^8.3",
-    "guzzlehttp/guzzle": "^7.5",
-    "illuminate/http": "^10.0|^11.0",
-    "illuminate/support": "^10.0|^11.0"
-  },
-  "require-dev": {
-    "phpstan/phpstan": "^1.9",
-    "phpunit/phpunit": "^10.0|^11.0",
-    "symplify/easy-coding-standard": "^12.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Cyberfusion\\PowerDNS\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Cyberfusion\\PowerDNS\\Tests\\": "tests"
-    }
-  },
-  "scripts": {
-    "test": [
-      "@analyze",
-      "@test:no-coverage",
-      "@lint:check"
-    ],
-    "test:coverage": "vendor/bin/phpunit",
-    "test:no-coverage": "vendor/bin/phpunit --no-coverage",
-    "analyze": "vendor/bin/phpstan analyse",
-    "lint:check": "vendor/bin/ecs",
-    "lint:fix": "vendor/bin/ecs --fix"
-  },
-  "config": {
-    "sort-packages": true
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+    "name": "cyberfusion/powerdns",
+    "description": "Easy-to-use PHP client for the PowerDNS API.",
+    "type": "library",
+    "license": "MIT",
+    "support": {
+        "security": "https://cyberfusion.io/content/responsible-disclosure-policy",
+        "email": "support@cyberfusion.io"
+    },
+    "require": {
+        "php": "^8.3",
+        "guzzlehttp/guzzle": "^7.5",
+        "illuminate/http": "^10.0|^11.0",
+        "illuminate/support": "^10.0|^11.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.9",
+        "phpunit/phpunit": "^10.0|^11.0",
+        "symplify/easy-coding-standard": "^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "Cyberfusion\\PowerDNS\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+          "Cyberfusion\\PowerDNS\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": [
+            "@analyze",
+            "@test:no-coverage",
+            "@lint:check"
+        ],
+        "test:coverage": "vendor/bin/phpunit",
+        "test:no-coverage": "vendor/bin/phpunit --no-coverage",
+        "analyze": "vendor/bin/phpstan analyse",
+        "lint:check": "vendor/bin/ecs",
+        "lint:fix": "vendor/bin/ecs --fix"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
