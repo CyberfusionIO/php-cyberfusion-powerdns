@@ -126,9 +126,7 @@ class RRSet implements Requestable, Responsable
             name: Arr::get($data, 'name', ''),
             type: Arr::get($data, 'type', ''),
             ttl: Arr::get($data, 'ttl', 3600),
-            changeType: Arr::get($data, 'changetype')
-                ? ChangeType::from(Arr::get($data, 'changetype'))
-                : ChangeType::Replace,
+            changeType: ChangeType::tryFrom(Arr::get($data, 'changetype')) ?? ChangeType::Replace,
             records: array_map(
                 fn(array $record) => Record::fromResponse($record),
                 Arr::get($data, 'records', []),
@@ -142,21 +140,32 @@ class RRSet implements Requestable, Responsable
 
     public function toArray(): array
     {
-        return [
+        $array = [
             'name' => $this->name,
             'type' => $this->type,
-            'ttl' => $this->ttl,
             'changetype' => $this
                 ->changeType
                 ->value,
-            'records' => array_map(
+        ];
+
+        if ($this->ttl !== null) {
+            $array['ttl'] = $this->ttl;
+        }
+
+        if (count($this->records) !== 0) {
+            $array['records'] = array_map(
                 fn(Record $record) => $record->toArray(),
                 $this->records,
-            ),
-            'comments' => array_map(
+            );
+        }
+
+        if (count($this->comments) !== 0) {
+            $array['comments'] = array_map(
                 fn(Comment $comment) => $comment->toArray(),
                 $this->comments,
-            ),
-        ];
+            );
+        }
+
+        return $array;
     }
 }
