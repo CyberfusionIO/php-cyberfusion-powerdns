@@ -13,7 +13,7 @@ class PowerDNS
 {
     private const TIMEOUT = 180;
 
-    private const VERSION = '2.4.0';
+    private const VERSION = '2.5.0';
 
     private const USER_AGENT = 'cyberfusion-powerdns-client/' . self::VERSION;
 
